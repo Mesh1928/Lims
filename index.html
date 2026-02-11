@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Tanjina 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: radial-gradient(circle at top, #1a001f, #0d0014);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+        color: #ffe6f0;
+    }
+
+    /* Heart rain */
+    .heart {
+        position: fixed;
+        top: -10px;
+        font-size: 18px;
+        color: #ff4d8d;
+        animation: fall linear infinite;
+        opacity: 0.7;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+            opacity: 0;
+        }
+    }
+
+    .container {
+        background: rgba(30, 10, 40, 0.85);
+        padding: 30px;
+        border-radius: 22px;
+        width: 90%;
+        max-width: 420px;
+        box-shadow: 0 0 40px rgba(255, 77, 141, 0.25);
+        z-index: 2;
+        animation: fadeIn 1.2s ease;
+    }
+
+    h1 {
+        color: #ff6fae;
+    }
+
+    .name {
+        font-size: 34px;
+        font-weight: bold;
+        color: #ff4d8d;
+        text-shadow: 0 0 15px #ff4d8d, 0 0 35px #ff1f6a;
+        animation: glow 2s infinite alternate;
+    }
+
+    p {
+        font-size: 17px;
+        line-height: 1.7;
+        min-height: 90px;
+        color: #ffe6f0;
+    }
+
+    button {
+        border: none;
+        padding: 14px 28px;
+        font-size: 18px;
+        border-radius: 50px;
+        cursor: pointer;
+        margin: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .next-btn, .yes-btn {
+        background: linear-gradient(135deg, #ff4d8d, #ff1f6a);
+        color: white;
+    }
+
+    .yes-btn {
+        animation: heartbeat 1.5s infinite;
+    }
+
+    .no-btn {
+        background: #3a2a40;
+        color: #ccc;
+    }
+
+    .save-btn {
+        background: linear-gradient(135deg, #ffb703, #fb8500);
+        color: white;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .vibrate {
+        animation: vibrate 0.15s infinite;
+    }
+
+    .pulse-screen {
+        animation: screenPulse 0.6s ease;
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 15px #ff4d8d; }
+        to { text-shadow: 0 0 40px #ff1f6a; }
+    }
+
+    @keyframes heartbeat {
+        0% { transform: scale(1); }
+        14% { transform: scale(1.15); }
+        28% { transform: scale(1); }
+        42% { transform: scale(1.15); }
+        70% { transform: scale(1); }
+    }
+
+    @keyframes screenPulse {
+        0% { box-shadow: 0 0 0 rgba(255,77,141,0.0); }
+        50% { box-shadow: 0 0 80px rgba(255,77,141,0.6); }
+        100% { box-shadow: 0 0 0 rgba(255,77,141,0.0); }
+    }
+
+    @keyframes vibrate {
+        0% { transform: translate(0); }
+        25% { transform: translate(2px, 2px); }
+        50% { transform: translate(-2px, -2px); }
+        75% { transform: translate(2px, -2px); }
+        100% { transform: translate(-2px, 2px); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+</style>
+</head>
+<body>
+
+<div class="container" id="container">
+
+    <!-- PAGE 1 -->
+    <div id="page1">
+        <h1>Hey <span class="name">Tanjina</span> 💖</h1>
+        <p id="note1"></p>
+        <button class="next-btn" onclick="goToQuestion()">Next 💌</button>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2" class="hidden">
+        <h1>Will you be my Valentine? 💘</h1>
+        <button id="yesBtn" class="yes-btn" onclick="sayYes()">Yes 💖</button>
+        <button class="no-btn" onclick="sayNo()">No 🙈</button>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div id="page3" class="hidden">
+        <h1>YAYYY 🎉💖</h1>
+        <p id="note2"></p>
+        <button class="save-btn" onclick="saveMoment()">Save This Moment 💾</button>
+    </div>
+
+</div>
+
+<script>
+    /* HEART RAIN */
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerText = '💖';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 320);
+
+    /* TYPING EFFECT */
+    function typeText(element, text, speed = 35) {
+        element.innerHTML = "";
+        let i = 0;
+        const interval = setInterval(() => {
+            element.innerHTML += text.charAt(i);
+            i++;
+            if (i >= text.length) clearInterval(interval);
+        }, speed);
+    }
+
+    const note1Text = `I wanted you to read this first.
+Late at night, when everything is quiet,
+you’re the thought that feels the loudest in my heart.`;
+
+    const note2Text = `You felt that heartbeat?
+That’s how fast my heart raced when you said yes.
+This moment… it’s ours 💖`;
+
+    typeText(document.getElementById('note1'), note1Text);
+
+    let yesSize = 20;
+
+    function goToQuestion() {
+        document.getElementById('page1').classList.add('hidden');
+        document.getElementById('page2').classList.remove('hidden');
+    }
+
+    function sayNo() {
+        const yesBtn = document.getElementById('yesBtn');
+        yesSize += 6;
+        yesBtn.style.fontSize = yesSize + 'px';
+        yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px';
+    }
+
+    function sayYes() {
+        document.getElementById('page2').classList.add('hidden');
+        document.getElementById('page3').classList.remove('hidden');
+
+        const container = document.getElementById('container');
+        container.classList.add('pulse-screen');
+        setTimeout(() => container.classList.remove('pulse-screen'), 600);
+
+        confetti({
+            particleCount: 220,
+            spread: 110,
+            origin: { y: 0.6 }
+        });
+
+        typeText(document.getElementById('note2'), note2Text);
+    }
+
+    function saveMoment() {
+        const text = `Valentine’s Night 💖
+Tanjina said YES.
+A heartbeat frozen in time.`;
+
+        const blob = new Blob([text], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "Our_Valentine_Night.txt";
+        link.click();
+    }
+</script>
+
+</body>
+</html>

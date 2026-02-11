@@ -39,15 +39,24 @@
     }
 
     .container {
-        background: rgba(30, 10, 40, 0.85);
-        padding: 30px;
-        border-radius: 22px;
-        width: 90%;
-        max-width: 420px;
-        box-shadow: 0 0 40px rgba(255, 77, 141, 0.25);
-        z-index: 2;
-        animation: fadeIn 1.2s ease;
-    }
+    background: rgba(30, 10, 40, 0.85);
+    padding: 30px;
+    border-radius: 22px;
+    width: 90%;
+    max-width: 420px;
+    max-height: 80vh; /* limit height to 80% of screen */
+    box-shadow: 0 0 40px rgba(255, 77, 141, 0.25);
+    z-index: 2;
+    animation: fadeIn 1.2s ease;
+    overflow-y: auto; /* allows scrolling if content is too big */
+}
+    .container {
+    /* ...existing styles... */
+    padding-bottom: 50px; /* extra space at the bottom */
+}
+
+
+    
 
     h1 {
         color: #ff6fae;

@@ -39,24 +39,18 @@
     }
 
     .container {
-    background: rgba(30, 10, 40, 0.85);
-    padding: 30px;
-    border-radius: 22px;
-    width: 90%;
-    max-width: 420px;
-    max-height: 80vh; /* limit height to 80% of screen */
-    box-shadow: 0 0 40px rgba(255, 77, 141, 0.25);
-    z-index: 2;
-    animation: fadeIn 1.2s ease;
-    overflow-y: auto; /* allows scrolling if content is too big */
-}
-    .container {
-    /* ...existing styles... */
-    padding-bottom: 50px; /* extra space at the bottom */
-}
-
-
-    
+        background: rgba(30, 10, 40, 0.85);
+        padding: 30px;
+        padding-bottom: 50px; /* extra space for buttons */
+        border-radius: 22px;
+        width: 90%;
+        max-width: 420px;
+        max-height: 80vh; /* scrollable if content too long */
+        box-shadow: 0 0 40px rgba(255, 77, 141, 0.25);
+        z-index: 2;
+        animation: fadeIn 1.2s ease;
+        overflow-y: auto;
+    }
 
     h1 {
         color: #ff6fae;
@@ -75,6 +69,7 @@
         line-height: 1.7;
         min-height: 90px;
         color: #ffe6f0;
+        white-space: pre-wrap;
     }
 
     button {
@@ -176,6 +171,14 @@
         <h1>YAYYY 🎉💖</h1>
         <p id="note2"></p>
         <button class="save-btn" onclick="saveMoment()">Save This Moment 💾</button>
+        <button class="next-btn" onclick="goToThirdNote()">Next 💌</button>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div id="page4" class="hidden">
+        <h1>Just One More Thing 💌</h1>
+        <p id="note3"></p>
+        <button class="next-btn" onclick="endMessage()">Finish 💖</button>
     </div>
 
 </div>
@@ -204,8 +207,8 @@
         }, speed);
     }
 
-    const note1Text = `Tanjina,I want you to read this first.
-    I don't like the fact we are so distant now, after over a year of talking
+    /* NOTES */
+    const note1Text = `Tanjina, I don't like the fact we are so distant now, after over a year of talking
 to each other all the time. Even when we would have fights, we were never this distant.
 I would at least see you at work and be around you, but now that is not possible either.
 I will address something very important right now. I would keep this a complete secret
@@ -223,54 +226,69 @@ month you never texted me once… it really made me feel like idek how to put it
 Anyways, now to the more important part: I did something small for you, so carry on and see
 if you like it.`;
 
-    const note2Text = `You felt that heartbeat?
+const note2Text = `You felt that heartbeat?
 That’s how fast my heart raced when you said yes.
 This moment… it’s ours 💖`;
 
-    typeText(document.getElementById('note1'), note1Text);
+const note3Text = `Here’s my final little note for you, Tanjina 💖
+I just want you to know how special you are to me,
+and that I always think of you, no matter the distance.`;
 
-    let yesSize = 20;
+typeText(document.getElementById('note1'), note1Text);
 
-    function goToQuestion() {
-        document.getElementById('page1').classList.add('hidden');
-        document.getElementById('page2').classList.remove('hidden');
-    }
+let yesSize = 20;
 
-    function sayNo() {
-        const yesBtn = document.getElementById('yesBtn');
-        yesSize += 6;
-        yesBtn.style.fontSize = yesSize + 'px';
-        yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px';
-    }
+function goToQuestion() {
+    document.getElementById('page1').classList.add('hidden');
+    document.getElementById('page2').classList.remove('hidden');
+}
 
-    function sayYes() {
-        document.getElementById('page2').classList.add('hidden');
-        document.getElementById('page3').classList.remove('hidden');
+function sayNo() {
+    const yesBtn = document.getElementById('yesBtn');
+    yesSize += 6;
+    yesBtn.style.fontSize = yesSize + 'px';
+    yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px';
+}
 
-        const container = document.getElementById('container');
-        container.classList.add('pulse-screen');
-        setTimeout(() => container.classList.remove('pulse-screen'), 600);
+function sayYes() {
+    document.getElementById('page2').classList.add('hidden');
+    document.getElementById('page3').classList.remove('hidden');
 
-        confetti({
-            particleCount: 220,
-            spread: 110,
-            origin: { y: 0.6 }
-        });
+    const container = document.getElementById('container');
+    container.classList.add('pulse-screen');
+    setTimeout(() => container.classList.remove('pulse-screen'), 600);
 
-        typeText(document.getElementById('note2'), note2Text);
-    }
+    confetti({
+        particleCount: 220,
+        spread: 110,
+        origin: { y: 0.6 }
+    });
 
-    function saveMoment() {
-        const text = `Valentine’s Night 💖
+    typeText(document.getElementById('note2'), note2Text);
+}
+
+function goToThirdNote() {
+    document.getElementById('page3').classList.add('hidden');
+    document.getElementById('page4').classList.remove('hidden');
+    typeText(document.getElementById('note3'), note3Text);
+}
+
+function endMessage() {
+    alert("💖 All done! Hope this made you smile! 💖");
+    // You can also add another confetti burst here if you want
+}
+
+function saveMoment() {
+    const text = `Valentine’s Night 💖
 Tanjina said YES.
 A heartbeat frozen in time.`;
 
-        const blob = new Blob([text], { type: "text/plain" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "Our_Valentine_Night.txt";
-        link.click();
-    }
+    const blob = new Blob([text], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Our_Valentine_Night.txt";
+    link.click();
+}
 </script>
 
 </body>

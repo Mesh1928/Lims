@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+   <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -8,147 +9,157 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
-    body {
-        margin: 0;
-        font-family: 'Poppins', sans-serif;
-        background: radial-gradient(circle at top, #1a001f, #0d0014);
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        overflow: hidden;
-        color: #ffe6f0;
-    }
+/* --- BODY & BACKGROUND --- */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    color: #ffe6f0;
+    background: linear-gradient(-45deg, #1a001f, #4d0033, #1a001f, #4d0033);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+}
 
-    /* Heart rain */
-    .heart {
-        position: fixed;
-        top: -10px;
-        font-size: 18px;
-        color: #ff4d8d;
-        animation: fall linear infinite;
-        opacity: 0.7;
-    }
+/* --- SCROLLABLE CONTAINER --- */
+.container {
+    background: rgba(30, 10, 40, 0.85);
+    padding: 30px;
+    padding-bottom: 50px;
+    border-radius: 22px;
+    width: 90%;
+    max-width: 420px;
+    max-height: 80vh;
+    box-shadow: 0 0 40px rgba(255, 77, 141, 0.25);
+    z-index: 2;
+    animation: fadeIn 1.2s ease;
+    overflow-y: auto;
+    position: relative;
+}
 
-    @keyframes fall {
-        to {
-            transform: translateY(110vh);
-            opacity: 0;
-        }
-    }
+/* Gradient fade at bottom */
+.container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to top, rgba(30,10,40,0.85), rgba(30,10,40,0));
+    pointer-events: none;
+}
 
-    .container {
-        background: rgba(30, 10, 40, 0.85);
-        padding: 30px;
-        padding-bottom: 50px; /* extra space for buttons */
-        border-radius: 22px;
-        width: 90%;
-        max-width: 420px;
-        max-height: 80vh; /* scrollable if content too long */
-        box-shadow: 0 0 40px rgba(255, 77, 141, 0.25);
-        z-index: 2;
-        animation: fadeIn 1.2s ease;
-        overflow-y: auto;
-    }
+/* --- HEADINGS & TEXT --- */
+h1 {
+    color: #ff6fae;
+}
+.name {
+    font-size: 34px;
+    font-weight: bold;
+    color: #ff4d8d;
+    text-shadow: 0 0 15px #ff4d8d, 0 0 35px #ff1f6a;
+    animation: glow 2s infinite alternate;
+}
+p {
+    font-size: 17px;
+    line-height: 1.7;
+    min-height: 90px;
+    color: #ffe6f0;
+    white-space: pre-wrap;
+}
 
-    h1 {
-        color: #ff6fae;
-    }
+/* --- BUTTONS --- */
+button {
+    border: none;
+    padding: 14px 28px;
+    font-size: 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 12px;
+    transition: all 0.3s ease;
+}
+.next-btn, .yes-btn {
+    background: linear-gradient(135deg, #ff4d8d, #ff1f6a);
+    color: white;
+}
+.yes-btn {
+    animation: heartbeat 1.5s infinite;
+}
+.no-btn {
+    background: #3a2a40;
+    color: #ccc;
+}
+.save-btn {
+    background: linear-gradient(135deg, #ffb703, #fb8500);
+    color: white;
+    font-size: 16px;
+    margin-top: 20px;
+}
 
-    .name {
-        font-size: 34px;
-        font-weight: bold;
-        color: #ff4d8d;
-        text-shadow: 0 0 15px #ff4d8d, 0 0 35px #ff1f6a;
-        animation: glow 2s infinite alternate;
-    }
+/* --- HIDDEN --- */
+.hidden { display: none; }
 
-    p {
-        font-size: 17px;
-        line-height: 1.7;
-        min-height: 90px;
-        color: #ffe6f0;
-        white-space: pre-wrap;
-    }
+/* --- VIBRATE --- */
+.vibrate { animation: vibrate 0.15s infinite; }
 
-    button {
-        border: none;
-        padding: 14px 28px;
-        font-size: 18px;
-        border-radius: 50px;
-        cursor: pointer;
-        margin: 12px;
-        transition: all 0.3s ease;
-    }
+/* --- PULSES --- */
+.pulse-screen { animation: screenPulse 0.6s ease; }
 
-    .next-btn, .yes-btn {
-        background: linear-gradient(135deg, #ff4d8d, #ff1f6a);
-        color: white;
-    }
+/* --- FLOATING HEARTS --- */
+.heart {
+    position: fixed;
+    top: -10px;
+    font-size: 18px;
+    color: #ff4d8d;
+    animation: fall linear infinite;
+    opacity: 0.7;
+}
 
-    .yes-btn {
-        animation: heartbeat 1.5s infinite;
-    }
+/* --- SCROLL INDICATOR --- */
+.scroll-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #ffb3c6;
+    animation: bounce 1s infinite;
+}
 
-    .no-btn {
-        background: #3a2a40;
-        color: #ccc;
-    }
+/* --- FINAL "I ❤️ YOU" --- */
+#finalLove {
+    font-size: 36px;
+    font-weight: bold;
+    color: #ff4d8d;
+    text-shadow: 0 0 15px #ff4d8d, 0 0 40px #ff1f6a;
+    opacity: 0;
+    animation: pulseFinal 1s infinite alternate;
+}
 
-    .save-btn {
-        background: linear-gradient(135deg, #ffb703, #fb8500);
-        color: white;
-        font-size: 16px;
-        margin-top: 20px;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .vibrate {
-        animation: vibrate 0.15s infinite;
-    }
-
-    .pulse-screen {
-        animation: screenPulse 0.6s ease;
-    }
-
-    @keyframes glow {
-        from { text-shadow: 0 0 15px #ff4d8d; }
-        to { text-shadow: 0 0 40px #ff1f6a; }
-    }
-
-    @keyframes heartbeat {
-        0% { transform: scale(1); }
-        14% { transform: scale(1.15); }
-        28% { transform: scale(1); }
-        42% { transform: scale(1.15); }
-        70% { transform: scale(1); }
-    }
-
-    @keyframes screenPulse {
-        0% { box-shadow: 0 0 0 rgba(255,77,141,0.0); }
-        50% { box-shadow: 0 0 80px rgba(255,77,141,0.6); }
-        100% { box-shadow: 0 0 0 rgba(255,77,141,0.0); }
-    }
-
-    @keyframes vibrate {
-        0% { transform: translate(0); }
-        25% { transform: translate(2px, 2px); }
-        50% { transform: translate(-2px, -2px); }
-        75% { transform: translate(2px, -2px); }
-        100% { transform: translate(-2px, 2px); }
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
-    }
+/* --- ANIMATIONS --- */
+@keyframes glow { from {text-shadow:0 0 15px #ff4d8d;} to {text-shadow:0 0 40px #ff1f6a;} }
+@keyframes heartbeat {0%{transform:scale(1);}14%{transform:scale(1.15);}28%{transform:scale(1);}42%{transform:scale(1.15);}70%{transform:scale(1);}}
+@keyframes screenPulse {0%{box-shadow:0 0 0 rgba(255,77,141,0.0);}50%{box-shadow:0 0 80px rgba(255,77,141,0.6);}100%{box-shadow:0 0 0 rgba(255,77,141,0.0);}}
+@keyframes vibrate {0%{transform:translate(0);}25%{transform:translate(2px,2px);}50%{transform:translate(-2px,-2px);}75%{transform:translate(2px,-2px);}100%{transform:translate(-2px,2px);}}
+@keyframes fadeIn {from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);}}
+@keyframes bounce {0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+@keyframes pulseFinal {0%{transform:scale(1);}100%{transform:scale(1.2);}}
+@keyframes fall {to{transform:translateY(110vh); opacity:0;}}
+@keyframes gradientShift {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
 </style>
 </head>
 <body>
+
+<!-- Background music -->
+<audio id="bgMusic" src="CinnamonGirl.mp3" loop></audio>
 
 <div class="container" id="container">
 
@@ -176,39 +187,40 @@
 
     <!-- PAGE 4 -->
     <div id="page4" class="hidden">
-        <h1>Just One More Thing 💌</h1>
         <p id="note3"></p>
+        <div id="finalLove">I ❤️ YOU</div>
         <button class="next-btn" onclick="endMessage()">Finish 💖</button>
+        <div class="scroll-indicator">&#x25BC;</div>
     </div>
 
 </div>
 
 <script>
-    /* HEART RAIN */
-    function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerText = '💖';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-    }
-    setInterval(createHeart, 320);
+/* --------------------- HEART RAIN --------------------- */
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerText = '💖';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+}
+setInterval(createHeart, 400);
 
-    /* TYPING EFFECT */
-    function typeText(element, text, speed = 35) {
-        element.innerHTML = "";
-        let i = 0;
-        const interval = setInterval(() => {
-            element.innerHTML += text.charAt(i);
-            i++;
-            if (i >= text.length) clearInterval(interval);
-        }, speed);
-    }
+/* --------------------- TYPING EFFECT --------------------- */
+function typeText(element, text, speed = 35) {
+    element.innerHTML = "";
+    let i = 0;
+    const interval = setInterval(() => {
+        element.innerHTML += text.charAt(i);
+        i++;
+        if (i >= text.length) clearInterval(interval);
+    }, speed);
+}
 
-    /* NOTES */
-    const note1Text = `Tanjina, I don't like the fact we are so distant now, after over a year of talking
+/* --------------------- NOTES --------------------- */
+const note1Text = `Tanjina, I don't like the fact we are so distant now, after over a year of talking
 to each other all the time. Even when we would have fights, we were never this distant.
 I would at least see you at work and be around you, but now that is not possible either.
 I will address something very important right now. I would keep this a complete secret
@@ -230,30 +242,25 @@ const note2Text = `You felt that heartbeat?
 That’s how fast my heart raced when you said yes.
 This moment… it’s ours 💖`;
 
-const note3Text = `Here’s my final little note for you, Tanjina 💖
-If you pressed Yes after pressing No multiple times that is fine by me....
-I know this might be childish what I did here but there was nothing I could
-really do for you with how you have been. I want to do this for you,
-these cute little things and also a lot of other things for you. Why would 
-I not want to?! I want my baby, my love back. I really really really miss her 
-a lot. I want us to be back to how we were — that does not mean you have to 
-speak to me the whole day. I just want us to be back to normal. 
-Tanjina Malik, you are the Love Of My Lifeeeee, my baby, my other half.
-You are the girl I have fallen in love with so deeply, if I don't do these 
-things for you then who do I even do them for? Not one day or moment passes
-by I don't think about you. I want a life with you, a future with you, a
-family with you. I want to spend my whole life with you and do everything with 
-you. I love you a lotttttt babe, I love you, I love you, I loveeeee youuuuuuuuuu
-and I just loveeeeeeeeeeeeeeeeeeeeeee youuuuuuuuuuuuu. I want to tell this to you,
-the girl I love so deeply, every single day without any sort of hesitation because
-I want it to be you. Every passing day my love for you only increases and I just
-cant help it. You are absolutely perfect in every single aspect for me and
-I would not want to have it any other way.I want you to be my happily ever after.
-I LOVE YOU MY LOVE❤️❤️❤️❤️❤️.`;
-
+const note3Text = `If you pressed Yes after pressing No multiple times that is fine by me....
+I know this might be childish what I did here but there was nothing I could really do for
+you with how you have been. I want to do these for you, these cute little things and also a
+lot of other things for you. Why would I not want to?! I want my baby, my love back. I really
+really really miss her a lot. I want us to be back to how we were — that does not mean you
+have to speak to me the whole day. I just want us to be back to normal. Tanjina Malik, you
+are the Love Of My Lifeeeee, my baby, my other half. You are the girl I have fallen in love
+with so deeply, if I don't do these things for you then who do I even do them for? Not one 
+day or moment passes by I don't think about you. I want a life with you, a future with you,
+a family with you. I want to spend my whole life with you and do everything with you.
+I love you a lotttttt babe, I love you, I love you, I loveeeee youuuuuuuuuu and 
+I just loveeeeeeeeeeeeeeeeeeeeeee youuuuuuuuuuuuu. I want to tell this to you,
+the girl I love so deeply, every single day without any sort of hesitation because 
+I want it to be you. You are absolutely perfect in every single aspect for me and 
+I would not want to have it any other way. I LOVE YOU MY LOVE❤️❤️❤️❤️❤️.`;
 
 typeText(document.getElementById('note1'), note1Text);
 
+/* --------------------- BUTTON LOGIC --------------------- */
 let yesSize = 20;
 
 function goToQuestion() {
@@ -278,8 +285,10 @@ function sayYes() {
 
     confetti({
         particleCount: 220,
-        spread: 110,
-        origin: { y: 0.6 }
+        spread: 120,
+        origin: { y: 0.6 },
+        shapes: ['heart'],
+        colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']
     });
 
     typeText(document.getElementById('note2'), note2Text);
@@ -289,25 +298,37 @@ function goToThirdNote() {
     document.getElementById('page3').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
     typeText(document.getElementById('note3'), note3Text);
+
+    // Show the final I ❤️ YOU after 2 seconds
+    setTimeout(() => {
+        document.getElementById('finalLove').style.opacity = 1;
+    }, 2000);
 }
 
 function endMessage() {
     alert("💖 All done! Hope this made you smile! 💖");
-    // You can also add another confetti burst here if you want
 }
 
+/* --------------------- SAVE BUTTON --------------------- */
 function saveMoment() {
     const text = `Valentine’s Night 💖
 Tanjina said YES.
 A heartbeat frozen in time.`;
-
     const blob = new Blob([text], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "Our_Valentine_Night.txt";
     link.click();
 }
-</script>
 
+/* --------------------- MUSIC ON FIRST TAP --------------------- */
+let musicPlayed = false;
+document.addEventListener('click', () => {
+    if (!musicPlayed) {
+        document.getElementById('bgMusic').play();
+        musicPlayed = true;
+    }
+});
+</script>
 </body>
 </html>

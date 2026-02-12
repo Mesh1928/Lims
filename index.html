@@ -82,22 +82,23 @@ button {
 #finalLove { font-size: 36px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d, 0 0 40px #ff1f6a; opacity: 0; animation: pulseFinal 1s infinite alternate; }
 #tapScreen { position: fixed; top:0; left:0; width: 100%; height: 100%; background: #1a001f; color: #ffb3c6; display:flex; justify-content:center; align-items:center; font-size: 24px; z-index: 9999; cursor: pointer; }
 @keyframes glow { from {text-shadow:0 0 15px #ff4d8d;} to {text-shadow:0 0 40px #ff1f6a;} }
-@keyframes heartbeat {0%{transform:scale(1);}14%{transform:scale(1.15);}28%{transform:scale(1);}42%{transform:scale(1.15);}70%{transform:scale(1);}}
-@keyframes screenPulse {0%{box-shadow:0 0 0 rgba(255,77,141,0.0);}50%{box-shadow:0 0 80px rgba(255,77,141,0.6);}100%{box-shadow:0 0 0 rgba(255,77,141,0.0);}}
-@keyframes vibrate {0%{transform:translate(0);}25%{transform:translate(2px,2px);}50%{transform:translate(-2px,-2px);}75%{transform:translate(2,-2px);}100%{transform:translate(-2,2px);}}
-@keyframes fadeIn {from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);}}
-@keyframes bounce {0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
-@keyframes pulseFinal {0%{transform:scale(1);}100%{transform:scale(1.2);}}
-@keyframes fall {to{transform:translateY(110vh); opacity:0;}}
-@keyframes gradientShift {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes heartbeat {0%{transform:scale(1);}14%{transform:scale(1.15);}28%{transform:scale(1);}42%{transform:scale(1.15);}70%{transform:scale(1);} }
+@keyframes screenPulse {0%{box-shadow:0 0 0 rgba(255,77,141,0.0);}50%{box-shadow:0 0 80px rgba(255,77,141,0.6);}100%{box-shadow:0 0 0 rgba(255,77,141,0.0);} }
+@keyframes vibrate {0%{transform:translate(0);}25%{transform:translate(2px,2px);}50%{transform:translate(-2px,-2px);}75%{transform:translate(2,-2px);}100%{transform:translate(-2,2px);} }
+@keyframes fadeIn {from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);} }
+@keyframes bounce {0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);} }
+@keyframes pulseFinal {0%{transform:scale(1);}100%{transform:scale(1.2);} }
+@keyframes fall {to{transform:translateY(110vh); opacity:0;} }
+@keyframes gradientShift {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;} }
 </style>
 </head>
 <body>
 
+<!-- BACKGROUND MUSIC -->
 <audio id="bgMusic" loop>
     <source src="assets/CinnamonGirl.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
 </audio>
-
 
 <div id="tapScreen">Tap anywhere to start 💖</div>
 
@@ -128,8 +129,18 @@ button {
     <!-- PAGE 4 -->
     <div id="page4" class="hidden">
         <p id="note3"></p>
+
+        <!-- PHOTO + NOTE + FINISH BUTTON -->
+        <div id="photoSection" class="hidden" style="margin-top: 20px;">
+            <img id="lovePhoto" src="assets/photo.jpg" alt="Love Photo"
+                 style="width: 100%; border-radius: 20px; box-shadow: 0 0 20px rgba(255,77,141,0.4);">
+            <p id="loveNote" style="margin-top: 12px; font-size: 20px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d;">
+                I love you my love 💖
+            </p>
+            <button class="next-btn" onclick="endMessage()">Finish 💖</button>
+        </div>
+
         <div id="finalLove">I ❤️ YOU</div>
-        <button class="next-btn" onclick="endMessage()">Finish 💖</button>
         <div class="scroll-indicator">&#x25BC;</div>
     </div>
 
@@ -244,6 +255,9 @@ function goToThirdNote() {
         // Increase heart rain frequency briefly
         const heartInterval = setInterval(() => createHeart(), 150);
         setTimeout(() => clearInterval(heartInterval), 4000);
+
+        // Show photo + note + finish button
+        document.getElementById('photoSection').classList.remove('hidden');
     });
 }
 

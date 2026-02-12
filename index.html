@@ -106,7 +106,7 @@ button {
 @keyframes fall {to{transform:translateY(110vh); opacity:0;} }
 @keyframes gradientShift {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;} }
 
-    /* --- KISSING EMOJIS --- */
+/* --- KISSING EMOJIS --- */
 .kisses {
     font-size: 28px;
     margin: 10px 0;
@@ -118,7 +118,6 @@ button {
     50% { transform: translateY(-6px); }
     100% { transform: translateY(0); }
 }
-
 </style>
 </head>
 <body>
@@ -160,7 +159,7 @@ button {
         <div class="scroll-indicator">&#x25BC;</div>
     </div>
 
-    <!-- PAGE 5 (PHOTO + FINAL NOTE + FINISH BUTTON) -->
+    <!-- PAGE 5 (PHOTO + FINAL NOTE + FINISH BUTTON + DATE COUNTER) -->
     <div id="page5" class="hidden">
         <img id="lovePhoto" src="assets/photo.jpeg" alt="Love Photo" 
              style="width: 100%; border-radius: 20px; box-shadow: 0 0 20px rgba(255,77,141,0.4); margin-bottom: 15px;">
@@ -170,6 +169,10 @@ button {
         <p id="loveNote" style="font-size: 20px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d;">
             I love you my love 💖
         </p>
+
+        <!-- DATE COUNTER -->
+        <p id="dateCounter" style="font-size: 16px; color: #ffe6f0; margin-top: 10px;"></p>
+
         <button class="next-btn" onclick="endMessage()">Finish 💖</button>
     </div>
 
@@ -258,6 +261,7 @@ function goToPhotoPage() {
     confetti({particleCount: 300, spread: 160, origin: { y: 0.4 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a', '#ffe6f0']});
     const heartInterval = setInterval(() => createHeart(), 150);
     setTimeout(() => clearInterval(heartInterval), 5000);
+    startDateCounter(); // Start the live date counter on page 5
 }
 function saveMoment() {
     const text = `Valentine’s Night 💖\nTanjina said YES.\nA heartbeat frozen in time.`;
@@ -272,7 +276,32 @@ document.getElementById('tapScreen').addEventListener('click', () => {
     document.getElementById('tapScreen').style.display = 'none';
 });
 function endMessage() { alert("💖 All done! Hope this made you smile! 💖"); }
+
+/* --- DATE COUNTER --- */
+function startDateCounter() {
+    const targetDate = new Date("2026-01-13T22:00:00"); // 13 Jan 2026 10 PM
+    const counter = document.getElementById('dateCounter');
+
+    function updateCounter() {
+        const now = new Date();
+        let diff = now - targetDate; // milliseconds
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                diff -= days * (1000 * 60 * 60 * 24);
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+        const minutes = Math.floor(diff / (1000 * 60));
+        diff -= minutes * (1000 * 60);
+
+        const seconds = Math.floor(diff / 1000);
+
+        counter.textContent = `${days} days, ${hours} hours, ${minutes} minutes since I last saw you 💖`;
+    }
+
+    updateCounter(); // initial call
+    setInterval(updateCounter, 60000); // update every minute
+}
 </script>
 </body>
 </html>
+
 

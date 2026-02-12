@@ -105,6 +105,20 @@ button {
 @keyframes pulseFinal {0%{transform:scale(1);}100%{transform:scale(1.2);} }
 @keyframes fall {to{transform:translateY(110vh); opacity:0;} }
 @keyframes gradientShift {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;} }
+
+    /* --- KISSING EMOJIS --- */
+.kisses {
+    font-size: 28px;
+    margin: 10px 0;
+    animation: kissFloat 2s ease-in-out infinite;
+}
+
+@keyframes kissFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+}
+
 </style>
 </head>
 <body>
@@ -150,6 +164,9 @@ button {
     <div id="page5" class="hidden">
         <img id="lovePhoto" src="assets/photo.jpeg" alt="Love Photo" 
              style="width: 100%; border-radius: 20px; box-shadow: 0 0 20px rgba(255,77,141,0.4); margin-bottom: 15px;">
+        
+        <div class="kisses">💋💋💋💋💋</div>
+
         <p id="loveNote" style="font-size: 20px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d;">
             I love you my love 💖
         </p>

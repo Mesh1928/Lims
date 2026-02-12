@@ -81,10 +81,25 @@ button {
 .scroll-indicator { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 20px; color: #ffb3c6; animation: bounce 1s infinite; }
 #finalLove { font-size: 36px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d, 0 0 40px #ff1f6a; opacity: 0; animation: pulseFinal 1s infinite alternate; }
 #tapScreen { position: fixed; top:0; left:0; width: 100%; height: 100%; background: #1a001f; color: #ffb3c6; display:flex; justify-content:center; align-items:center; font-size: 24px; z-index: 9999; cursor: pointer; }
+
+/* --- FLOAT / PULSE ANIMATIONS --- */
+@keyframes floatPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+#lovePhoto {
+    animation: floatPulse 3s ease-in-out infinite;
+}
+#loveNote {
+    animation: floatPulse 3s ease-in-out infinite;
+}
+
+/* --- EXISTING ANIMATIONS --- */
 @keyframes glow { from {text-shadow:0 0 15px #ff4d8d;} to {text-shadow:0 0 40px #ff1f6a;} }
 @keyframes heartbeat {0%{transform:scale(1);}14%{transform:scale(1.15);}28%{transform:scale(1);}42%{transform:scale(1.15);}70%{transform:scale(1);} }
 @keyframes screenPulse {0%{box-shadow:0 0 0 rgba(255,77,141,0.0);}50%{box-shadow:0 0 80px rgba(255,77,141,0.6);}100%{box-shadow:0 0 0 rgba(255,77,141,0.0);} }
-@keyframes vibrate {0%{transform:translate(0);}25%{transform:translate(2px,2px);}50%{transform:translate(-2px,-2px);}75%{transform:translate(2,-2px);}100%{transform:translate(-2,2px);} }
+@keyframes vibrate {0%{transform:translate(0);}25%{transform:translate(2px,2px);}50%{transform:translate(-2px,-2px);}75%{transform:translate(2,-2px);}100%{transform:translate(-2,2);} }
 @keyframes fadeIn {from{opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);} }
 @keyframes bounce {0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);} }
 @keyframes pulseFinal {0%{transform:scale(1);}100%{transform:scale(1.2);} }
@@ -94,7 +109,6 @@ button {
 </head>
 <body>
 
-<!-- BACKGROUND MUSIC -->
 <audio id="bgMusic" loop>
     <source src="assets/CinnamonGirl.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
@@ -126,22 +140,21 @@ button {
         <button class="next-btn" onclick="goToThirdNote()">Next 💌</button>
     </div>
 
-    <!-- PAGE 4 -->
+    <!-- PAGE 4 (Third Note) -->
     <div id="page4" class="hidden">
         <p id="note3"></p>
-
-        <!-- PHOTO + NOTE + FINISH BUTTON -->
-        <div id="photoSection" class="hidden" style="margin-top: 20px;">
-            <img id="lovePhoto" src="assets/photo.jpg" alt="Love Photo"
-                 style="width: 100%; border-radius: 20px; box-shadow: 0 0 20px rgba(255,77,141,0.4);">
-            <p id="loveNote" style="margin-top: 12px; font-size: 20px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d;">
-                I love you my love 💖
-            </p>
-            <button class="next-btn" onclick="endMessage()">Finish 💖</button>
-        </div>
-
-        <div id="finalLove">I ❤️ YOU</div>
+        <button class="next-btn" onclick="goToPhotoPage()">Next 💌</button>
         <div class="scroll-indicator">&#x25BC;</div>
+    </div>
+
+    <!-- PAGE 5 (PHOTO + FINAL NOTE + FINISH BUTTON) -->
+    <div id="page5" class="hidden">
+        <img id="lovePhoto" src="assets/photo.jpg" alt="Love Photo" 
+             style="width: 100%; border-radius: 20px; box-shadow: 0 0 20px rgba(255,77,141,0.4); margin-bottom: 15px;">
+        <p id="loveNote" style="font-size: 20px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d;">
+            I love you my love 💖
+        </p>
+        <button class="next-btn" onclick="endMessage()">Finish 💖</button>
     </div>
 
 </div>
@@ -157,7 +170,6 @@ function createHeart() {
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 7000);
 }
-setInterval(createHeart, 400);
 
 /* --- TYPING --- */
 function typeText(element, text, speed = 35, callback = null) {
@@ -202,86 +214,47 @@ typeText(document.getElementById('note1'), note1Text);
 
 /* --- BUTTON LOGIC --- */
 let yesSize = 20;
-
-function goToQuestion() {
-    document.getElementById('page1').classList.add('hidden');
-    document.getElementById('page2').classList.remove('hidden');
-}
-
-function sayNo() {
-    const yesBtn = document.getElementById('yesBtn');
-    yesSize += 6;
-    yesBtn.style.fontSize = yesSize + 'px';
-    yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px';
-}
-
+function goToQuestion() { document.getElementById('page1').classList.add('hidden'); document.getElementById('page2').classList.remove('hidden'); }
+function sayNo() { const yesBtn = document.getElementById('yesBtn'); yesSize += 6; yesBtn.style.fontSize = yesSize + 'px'; yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px'; }
 function sayYes() {
     document.getElementById('page2').classList.add('hidden');
     document.getElementById('page3').classList.remove('hidden');
-
     const container = document.getElementById('container');
     container.classList.add('pulse-screen');
     setTimeout(() => container.classList.remove('pulse-screen'), 600);
-
-    confetti({
-        particleCount: 220,
-        spread: 120,
-        origin: { y: 0.6 },
-        shapes: ['heart'],
-        colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']
-    });
-
+    confetti({particleCount: 220, spread: 120, origin: { y: 0.6 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']});
     typeText(document.getElementById('note2'), note2Text);
 }
-
 function goToThirdNote() {
     document.getElementById('page3').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
-
     typeText(document.getElementById('note3'), note3Text, 25, () => {
-        // Show final I ❤️ YOU
-        const finalLove = document.getElementById('finalLove');
-        finalLove.style.opacity = 1;
-
-        // Burst confetti for final reveal
-        confetti({
-            particleCount: 250,
-            spread: 160,
-            origin: { y: 0.4 },
-            shapes: ['heart'],
-            colors: ['#ff4d8d', '#ff6fae', '#ff1f6a', '#ffe6f0']
-        });
-
-        // Increase heart rain frequency briefly
-        const heartInterval = setInterval(() => createHeart(), 150);
+        confetti({particleCount: 150, spread: 120, origin: { y: 0.7 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a', '#ffe6f0']});
+        const heartInterval = setInterval(() => createHeart(), 250);
         setTimeout(() => clearInterval(heartInterval), 4000);
-
-        // Show photo + note + finish button
-        document.getElementById('photoSection').classList.remove('hidden');
     });
 }
-
-function endMessage() {
-    alert("💖 All done! Hope this made you smile! 💖");
+function goToPhotoPage() {
+    document.getElementById('page4').classList.add('hidden');
+    document.getElementById('page5').classList.remove('hidden');
+    confetti({particleCount: 300, spread: 160, origin: { y: 0.4 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a', '#ffe6f0']});
+    const heartInterval = setInterval(() => createHeart(), 150);
+    setTimeout(() => clearInterval(heartInterval), 5000);
 }
-
-/* --- SAVE BUTTON --- */
 function saveMoment() {
-    const text = `Valentine’s Night 💖
-Tanjina said YES.
-A heartbeat frozen in time.`;
+    const text = `Valentine’s Night 💖\nTanjina said YES.\nA heartbeat frozen in time.`;
     const blob = new Blob([text], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "Our_Valentine_Night.txt";
     link.click();
 }
-
-/* --- TAP TO PLAY MUSIC --- */
 document.getElementById('tapScreen').addEventListener('click', () => {
     document.getElementById('bgMusic').play();
     document.getElementById('tapScreen').style.display = 'none';
 });
+function endMessage() { alert("💖 All done! Hope this made you smile! 💖"); }
 </script>
 </body>
 </html>
+

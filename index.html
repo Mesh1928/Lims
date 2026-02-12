@@ -94,7 +94,19 @@ button {
 </head>
 <body>
 
-<audio id="bgMusic" src="CinnamonGirl.mp3" loop></audio>
+<audio id="bgMusic" preload="auto">
+  <source src="assets/cinnamongirl.mp3" type="audio/mpeg">
+</audio>
+
+    <script>
+document.addEventListener("click", () => {
+  const music = document.getElementById("bgMusic");
+  if (music.paused) {
+    music.play();
+  }
+});
+</script>
+
 <div id="tapScreen">Tap anywhere to start 💖</div>
 
 <div class="container" id="container">

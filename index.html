@@ -123,6 +123,41 @@ button {
 .flicker { animation: secondFlicker 1s infinite; }
 @keyframes secondFlicker {0%,100%{opacity:1;}50%{opacity:0.4;}}
 
+/* Floating hearts animation for slide1 */
+.floating-hearts div {
+    position: absolute;
+    top: 100%;
+    font-size: 18px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.6;
+    color: #ff4d8d;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { transform: translateY(-50vh) rotate(15deg); opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(30deg); opacity: 0; }
+}
+
+/* Glowing typing effect for slide1 */
+#note1.typing {
+    text-shadow: 0 0 8px #ff6fae, 0 0 20px #ff1f6a;
+}
+
+/* Slide2 background glow */
+#page2 {
+    background: radial-gradient(circle at center, rgba(255,77,141,0.1) 0%, rgba(26,0,31,0.9) 100%);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+/* Buttons hover glow */
+#page2 button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #ff4d8d;
+}
+
+
 </style>
 </head>
 <body>
@@ -140,6 +175,7 @@ button {
         <h1>Hey <span class="name">Tanjina</span> 💖</h1>
         <p id="note1"></p>
         <button class="next-btn" onclick="goToQuestion()">Next 💌</button>
+        <div class="floating-hearts"></div>
     </div>
 
     <!-- PAGE 2 -->
@@ -227,6 +263,32 @@ const note3Text = `If you pressed Yes after pressing No multiple times that is f
 
 typeText(document.getElementById('note1'), note1Text);
 
+// Slide1 floating hearts
+function createFloatingHeartsSlide1() {
+    const container = document.querySelector('#page1 .floating-hearts');
+    for (let i = 0; i < 6; i++) {
+        const heart = document.createElement('div');
+        heart.innerText = '💖';
+        heart.style.left = Math.random() * 100 + 'px';
+        heart.style.fontSize = (12 + Math.random()*12) + 'px';
+        container.appendChild(heart);
+    }
+}
+window.addEventListener('load', () => {
+    if (!document.getElementById('page1').classList.contains('hidden')) {
+        createFloatingHeartsSlide1();
+    }
+});
+const yesBtn = document.getElementById('yesBtn');
+yesBtn.addEventListener('mouseover', () => {
+    confetti({ particleCount: 10, spread: 40, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
+});
+const noBtn = document.querySelector('.no-btn');
+noBtn.addEventListener('mouseover', () => {
+    confetti({ particleCount: 10, spread: 40, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
+});
+
+
 /* --- BUTTON LOGIC --- */
 let yesSize=20;
 function goToQuestion(){ document.getElementById('page1').classList.add('hidden'); document.getElementById('page2').classList.remove('hidden'); }
@@ -278,7 +340,22 @@ document.getElementById('tapScreen').addEventListener('click',()=>{
     document.getElementById('bgMusic').play();
     document.getElementById('tapScreen').style.display='none';
 });
-function endMessage(){ alert("💖 All done! Hope this made you smile! 💖"); }
+function endMessage() {
+    const finalNote = document.getElementById('loveNote');
+    finalNote.style.display = 'block';           // Make sure the note is visible
+    finalNote.classList.add('pulse-screen');     // Add glowing/pulse animation
+
+    confetti({
+        particleCount: 150,
+        spread: 120,
+        origin: { y: 0.5 },
+        shapes: ['heart'],
+        colors: ['#ff4d8d','#ff6fae','#ff1f6a','#ffe6f0']
+    });
+
+    alert("💖 All done! Hope this made you smile! 💖"); // Optional, keeps the alert
+}
+
 
 /* --- DATE COUNTER --- */
 function startDateCounter(){

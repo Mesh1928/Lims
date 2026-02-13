@@ -129,47 +129,6 @@ button {
 /* --- SLIDE 2 GRADIENT --- */
 #page2 { background: linear-gradient(-45deg,#1a001f,#4d0033,#4d0033,#1a001f); background-size:400% 400%; animation: gradientShift 10s ease infinite; }
 
-/* --- FLOATING HEARTS --- */
-.floating-heart {
-    position: absolute;
-    font-size: 18px;
-    color: #ff4d8d;
-    opacity: 0.7;
-    animation: floatUp linear infinite;
-}
-@keyframes floatUp {
-    0% { transform: translateY(0) scale(0.8); opacity: 0.7; }
-    50% { transform: translateY(-50px) scale(1); opacity: 1; }
-    100% { transform: translateY(-120px) scale(0.8); opacity: 0; }
-}
-
-/* --- SOFT BOKEH/STARS --- */
-.star {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #ffe6f0;
-    border-radius: 50%;
-    opacity: 0.7;
-    animation: twinkle 3s infinite;
-}
-@keyframes twinkle {
-    0%,100% { opacity: 0.3; }
-    50% { opacity: 1; }
-}
-
-/* --- ORBITING HEARTS AROUND NAME --- */
-.orbit-heart {
-    position: absolute;
-    font-size: 14px;
-    color: #ff6fae;
-    animation: orbit 3s linear infinite;
-}
-@keyframes orbit {
-    from { transform: rotate(0deg) translateX(30px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
-}
-
 </style>
 </head>
 <body>
@@ -188,21 +147,6 @@ button {
         <p id="note1"></p>
         <button class="next-btn" onclick="goToQuestion()">Next 💌</button>
     </div>
-
-    <div id="page1">
-    <h1>Hey <span class="name">Tanjina</span> 💖</h1>
-    <p id="note1"></p>
-    <button class="next-btn" onclick="goToQuestion()">Next 💌</button>
-
-    <!-- Floating hearts will appear here via JS -->
-    <div class="floating-hearts"></div>
-
-    <!-- Stars container -->
-    <div id="starsContainer"></div>
-
-    <!-- Orbiting hearts around name -->
-    <div id="orbitHearts"></div>
-</div>
 
 
     <!-- PAGE 2 -->
@@ -308,47 +252,6 @@ const note3Text = `If you pressed Yes after pressing No multiple times that is f
 
 typeText(document.getElementById('note1'), note1Text);
 
-/* --- SPAWN FLOATING HEARTS --- */
-function spawnFloatingHeart() {
-    const heart = document.createElement('div');
-    heart.classList.add('floating-heart');
-    heart.innerText = '💖';
-    heart.style.left = Math.random() * 90 + 'vw';
-    heart.style.animationDuration = (3 + Math.random() * 2) + 's';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-}
-setInterval(spawnFloatingHeart, 600);
-
-/* --- SPAWN STARS --- */
-const starsContainer = document.getElementById('starsContainer');
-for(let i=0; i<30; i++){
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.style.left = Math.random() * 100 + 'vw';
-    star.style.top = Math.random() * 80 + 'vh';
-    star.style.width = 2 + Math.random() * 3 + 'px';
-    star.style.height = star.style.width;
-    star.style.animationDuration = (2 + Math.random() * 2) + 's';
-    starsContainer.appendChild(star);
-}
-
-/* --- ORBITING HEARTS AROUND NAME --- */
-const orbitContainer = document.getElementById('orbitHearts');
-const nameElement = document.querySelector('.name');
-const rect = nameElement.getBoundingClientRect();
-const centerX = rect.left + rect.width/2;
-const centerY = rect.top + rect.height/2;
-
-for(let i=0; i<4; i++){
-    const heart = document.createElement('div');
-    heart.classList.add('orbit-heart');
-    heart.innerText = '💖';
-    heart.style.left = (centerX) + 'px';
-    heart.style.top = (centerY) + 'px';
-    heart.style.animationDelay = (i * 0.5) + 's';
-    orbitContainer.appendChild(heart);
-}
 
 
 /* --- BUTTON LOGIC --- */

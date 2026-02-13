@@ -156,6 +156,38 @@ button {
     transform: scale(1.08);
     box-shadow: 0 0 20px #ff4d8d;
 }
+/* Page 3 Roses Container */
+#page3Roses {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* Individual rose */
+.page3-rose {
+    position: absolute;
+    font-size: 24px;
+    animation: flyRose linear forwards;
+}
+
+@keyframes flyRose {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
 
 
 </style>
@@ -191,6 +223,8 @@ button {
         <p id="note2"></p>
         <button class="save-btn" onclick="saveMoment()">Save This Moment 💾</button>
         <button class="next-btn" onclick="goToThirdNote()">Next 💌</button>
+        <div id="page3Roses"></div>
+
     </div>
 
     <!-- PAGE 4 -->
@@ -376,6 +410,36 @@ function startDateCounter(){
     updateCounter();
     setInterval(updateCounter,1000);
 }
+    let page3RoseInterval = null;
+
+function spawnPage3Rose() {
+    const rose = document.createElement('div');
+    rose.classList.add('page3-rose');
+    rose.innerText = '🌹';
+    rose.style.left = Math.random() * 100 + 'vw';
+    rose.style.fontSize = (20 + Math.random() * 20) + 'px';
+    rose.style.animationDuration = (6 + Math.random() * 4) + 's';
+
+    const container = document.getElementById('page3Roses');
+    container.appendChild(rose);
+
+    setTimeout(() => {
+        rose.remove();
+    }, 10000);
+}
+
+function startPage3Roses() {
+    if (!page3RoseInterval) {
+        page3RoseInterval = setInterval(spawnPage3Rose, 600);
+    }
+}
+
+function stopPage3Roses() {
+    clearInterval(page3RoseInterval);
+    page3RoseInterval = null;
+    document.getElementById('page3Roses').innerHTML = '';
+}
+
 
 </script>
 </body>

@@ -118,6 +118,45 @@ button {
     50% { transform: translateY(-6px); }
     100% { transform: translateY(0); }
 }
+    /* --- DATE COUNTER GLOW --- */
+#dateCounter {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 12px;
+    color: #ff4d8d;
+    text-shadow:
+        0 0 5px #ff4d8d,
+        0 0 10px #ff1f6a,
+        0 0 20px #ff1f6a;
+    animation: counterPulse 2s infinite alternate;
+}
+
+/* Pulse glow */
+@keyframes counterPulse {
+    from {
+        text-shadow:
+            0 0 5px #ff4d8d,
+            0 0 10px #ff1f6a,
+            0 0 20px #ff1f6a;
+    }
+    to {
+        text-shadow:
+            0 0 10px #ff6fae,
+            0 0 20px #ff4d8d,
+            0 0 35px #ff1f6a;
+    }
+}
+
+/* Flicker animation for seconds */
+.flicker {
+    animation: secondFlicker 1s infinite;
+}
+
+@keyframes secondFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
 </style>
 </head>
 <body>
@@ -277,29 +316,34 @@ document.getElementById('tapScreen').addEventListener('click', () => {
 });
 function endMessage() { alert("💖 All done! Hope this made you smile! 💖"); }
 
-/* --- DATE COUNTER --- */
 function startDateCounter() {
-    const targetDate = new Date("2026-01-13T22:00:00"); // 13 Jan 2026 10 PM
+    const targetDate = new Date("2026-01-13T22:00:00");
     const counter = document.getElementById('dateCounter');
 
     function updateCounter() {
         const now = new Date();
-        let diff = now - targetDate; // milliseconds
+        let diff = now - targetDate;
+
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                diff -= days * (1000 * 60 * 60 * 24);
+        diff -= days * (1000 * 60 * 60 * 24);
+
         const hours = Math.floor(diff / (1000 * 60 * 60));
         diff -= hours * (1000 * 60 * 60);
+
         const minutes = Math.floor(diff / (1000 * 60));
         diff -= minutes * (1000 * 60);
 
         const seconds = Math.floor(diff / 1000);
 
-        counter.textContent = `${days} days, ${hours} hours, ${minutes} minutes since I last saw you 💖`;
+        counter.innerHTML =
+            `${days} days, ${hours} hours, ${minutes} minutes, 
+            <span class="flicker">${seconds}</span> seconds since I last saw you 💖`;
     }
 
-    updateCounter(); // initial call
-    setInterval(updateCounter, 60000); // update every minute
+    updateCounter();
+    setInterval(updateCounter, 1000);
 }
+
 </script>
 </body>
 </html>

@@ -176,7 +176,10 @@ button {
              style="width: 100%; border-radius: 20px; box-shadow: 0 0 20px rgba(255,77,141,0.4); margin-bottom: 15px;">
         <div class="kisses">💋💋💋💋💋</div>
         <p id="loveNote" style="font-size: 20px; font-weight: bold; color: #ff4d8d; text-shadow:0 0 15px #ff4d8d;">I love you my love 💖</p>
-        <p id="dateCounter" style="font-size: 16px; color: #ffe6f0; margin-top: 10px;"></p>
+       <p id="dateCounter" style="font-size: 16px; color: #ffe6f0; margin-top: 10px;">
+    Been this long since I last saw you 💖
+</p>
+
         <button class="next-btn" onclick="endMessage()">Finish 💖</button>
     </div>
 
@@ -278,11 +281,13 @@ function goToThirdNote(){
     document.getElementById('page4').classList.remove('hidden');
     typeText(document.getElementById('note3'),note3Text,20);
 }
-function goToPhotoPage(){
+function goToPhotoPage() {
     document.getElementById('page4').classList.add('hidden');
     document.getElementById('page5').classList.remove('hidden');
-    confetti({particleCount:300,spread:160,origin:{y:0.4},shapes:['heart'],colors:['#ff4d8d','#ff6fae','#ff1f6a','#ffe6f0']});
-    startDateCounter();
+
+    confetti({particleCount:300, spread:160, origin:{y:0.4}, shapes:['heart'], colors:['#ff4d8d','#ff6fae','#ff1f6a','#ffe6f0']});
+
+    startDateCounter(); // <-- call it here
 }
 
 /* --- DATE COUNTER --- */
@@ -310,6 +315,36 @@ tapScreen.addEventListener('click',()=>{
     document.getElementById('bgMusic').play();
     startSlide1Hearts();
 });
+
+    function startDateCounter() {
+    const targetDate = new Date("2026-01-13T22:00:00"); // Last time you saw her
+    const counter = document.getElementById('dateCounter');
+
+    function updateCounter() {
+        const now = new Date();
+        let diff = now - targetDate;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        diff -= days * (1000 * 60 * 60 * 24);
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+
+        const minutes = Math.floor(diff / (1000 * 60));
+        diff -= minutes * (1000 * 60);
+
+        const seconds = Math.floor(diff / 1000);
+
+        counter.innerHTML =
+            `Been this long since I last saw you: <br>
+            ${days} days, ${hours} hours, ${minutes} minutes, 
+            <span class="flicker">${seconds}</span> seconds 💖`;
+    }
+
+    updateCounter();
+    setInterval(updateCounter, 1000);
+}
+
 </script>
 </body>
 </html>

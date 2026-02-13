@@ -344,6 +344,24 @@ tapScreen.addEventListener('click',()=>{
     updateCounter();
     setInterval(updateCounter, 1000);
 }
+    function endMessage() {
+    const finalNote = document.getElementById('loveNote');
+    finalNote.style.display = 'block';           // Make sure the note is visible
+    finalNote.classList.add('pulse-screen');     // Add glowing/pulse animation
+
+    // Confetti explosion
+    confetti({
+        particleCount: 150,
+        spread: 120,
+        origin: { y: 0.5 },
+        shapes: ['heart'],
+        colors: ['#ff4d8d','#ff6fae','#ff1f6a','#ffe6f0']
+    });
+
+    // Optional alert
+    alert("💖 All done! Hope this made you smile! 💖");
+}
+
 
 </script>
 </body>

@@ -424,7 +424,7 @@ function startDateCounter(){
         const minutes=Math.floor(diff/(1000*60));
         diff-=minutes*(1000*60);
         const seconds=Math.floor(diff/1000);
-        counter.innerHTML=`${days} days, ${hours} hours, ${minutes} minutes, <span class="flicker">${seconds}</span> seconds since I last saw you 💖`;
+        counter.innerHTML=`${days} days, ${hours} hours, ${minutes} minutes, <span class="flicker">${seconds}</span> seconds since we last met 💖`;
     }
     updateCounter();
     setInterval(updateCounter,1000);

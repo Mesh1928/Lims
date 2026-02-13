@@ -22,6 +22,7 @@ body {
     background-size: 400% 400%;
     animation: gradientShift 20s ease infinite;
 }
+
 .container {
     background: rgba(30, 10, 40, 0.85);
     padding: 30px;
@@ -80,22 +81,30 @@ button {
 .heart { position: fixed; top: -10px; font-size: 18px; color: #ff4d8d; animation: fall linear infinite; opacity: 0.7; }
 .scroll-indicator { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 20px; color: #ffb3c6; animation: bounce 1s infinite; }
 #finalLove { font-size: 36px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d, 0 0 40px #ff1f6a; opacity: 0; animation: pulseFinal 1s infinite alternate; }
-#tapScreen { position: fixed; top:0; left:0; width: 100%; height: 100%; background: #1a001f; color: #ffb3c6; display:flex; justify-content:center; align-items:center; font-size: 24px; z-index: 9999; cursor: pointer; }
+#tapScreen {
+    position: fixed;
+    top:0; left:0;
+    width: 100%;
+    height: 100%;
+    background: #1a001f;
+    color: #ffb3c6;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size: 24px;
+    z-index: 9999;
+    cursor: pointer;
+}
 
-/* --- FLOAT / PULSE ANIMATIONS --- */
+/* FLOAT / PULSE ANIMATIONS */
 @keyframes floatPulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
-#lovePhoto {
-    animation: floatPulse 3s ease-in-out infinite;
-}
-#loveNote {
-    animation: floatPulse 3s ease-in-out infinite;
-}
+#lovePhoto, #loveNote { animation: floatPulse 3s ease-in-out infinite; }
 
-/* --- EXISTING ANIMATIONS --- */
+/* EXISTING ANIMATIONS */
 @keyframes glow { from {text-shadow:0 0 15px #ff4d8d;} to {text-shadow:0 0 40px #ff1f6a;} }
 @keyframes heartbeat {0%{transform:scale(1);}14%{transform:scale(1.15);}28%{transform:scale(1);}42%{transform:scale(1.15);}70%{transform:scale(1);} }
 @keyframes screenPulse {0%{box-shadow:0 0 0 rgba(255,77,141,0.0);}50%{box-shadow:0 0 80px rgba(255,77,141,0.6);}100%{box-shadow:0 0 0 rgba(255,77,141,0.0);} }
@@ -106,75 +115,23 @@ button {
 @keyframes fall {to{transform:translateY(110vh); opacity:0;} }
 @keyframes gradientShift {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;} }
 
-/* --- KISSING EMOJIS --- */
-.kisses {
-    font-size: 28px;
-    margin: 10px 0;
-    animation: kissFloat 2s ease-in-out infinite;
-}
-@keyframes kissFloat {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-    100% { transform: translateY(0); }
-}
+/* KISSING EMOJIS */
+.kisses { font-size: 28px; margin: 10px 0; animation: kissFloat 2s ease-in-out infinite; }
+@keyframes kissFloat {0%{transform: translateY(0);}50%{transform: translateY(-6px);}100%{transform: translateY(0);}}
 
-/* --- DATE COUNTER GLOW --- */
+/* DATE COUNTER */
 #dateCounter {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 12px;
-    color: #ff4d8d;
-    text-shadow:
-        0 0 5px #ff4d8d,
-        0 0 10px #ff1f6a,
-        0 0 20px #ff1f6a;
+    font-size: 18px; font-weight: bold; margin-top: 12px; color: #ff4d8d;
+    text-shadow:0 0 5px #ff4d8d,0 0 10px #ff1f6a,0 0 20px #ff1f6a;
     animation: counterPulse 2s infinite alternate;
 }
-/* Pulse glow */
 @keyframes counterPulse {
-    from {
-        text-shadow:
-            0 0 5px #ff4d8d,
-            0 0 10px #ff1f6a,
-            0 0 20px #ff1f6a;
-    }
-    to {
-        text-shadow:
-            0 0 10px #ff6fae,
-            0 0 20px #ff4d8d,
-            0 0 35px #ff1f6a;
-    }
+    from { text-shadow:0 0 5px #ff4d8d,0 0 10px #ff1f6a,0 0 20px #ff1f6a; }
+    to { text-shadow:0 0 10px #ff6fae,0 0 20px #ff4d8d,0 0 35px #ff1f6a; }
 }
-/* Flicker animation for seconds */
 .flicker { animation: secondFlicker 1s infinite; }
-@keyframes secondFlicker { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+@keyframes secondFlicker {0%,100%{opacity:1;}50%{opacity:0.4;}}
 
-/* --- Floating hearts for slide1 --- */
-.floating-hearts div {
-    position: absolute;
-    top: 100%;
-    font-size: 18px;
-    animation: floatUp 8s linear infinite;
-    opacity: 0.6;
-    color: #ff4d8d;
-}
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
-    50% { transform: translateY(-50vh) rotate(15deg); opacity: 0.8; }
-    100% { transform: translateY(-100vh) rotate(30deg); opacity: 0; }
-}
-
-/* --- Slide2 glow background --- */
-#page2 {
-    background: radial-gradient(circle at center, rgba(255,77,141,0.1) 0%, rgba(26,0,31,0.9) 100%);
-    border-radius: 20px;
-    padding: 20px;
-}
-/* Slide2 button hover glow */
-#page2 button:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 20px #ff4d8d;
-}
 </style>
 </head>
 <body>
@@ -192,7 +149,6 @@ button {
         <h1>Hey <span class="name">Tanjina</span> 💖</h1>
         <p id="note1"></p>
         <button class="next-btn" onclick="goToQuestion()">Next 💌</button>
-        <div class="floating-hearts"></div>
     </div>
 
     <!-- PAGE 2 -->
@@ -219,62 +175,17 @@ button {
 
     <!-- PAGE 5 -->
     <div id="page5" class="hidden">
-        <img id="lovePhoto" src="assets/photo.jpeg" alt="Love Photo" 
-             style="width: 100%; border-radius: 20px; box-shadow: 0 0 20px rgba(255,77,141,0.4); margin-bottom: 15px;">
+        <img id="lovePhoto" src="assets/photo.jpeg" alt="Love Photo" style="width:100%;border-radius:20px;margin-bottom:15px;">
         <div class="kisses">💋💋💋💋💋</div>
-        <p id="loveNote" style="font-size: 20px; font-weight: bold; color: #ff4d8d; text-shadow: 0 0 15px #ff4d8d;">
-            I love you my love 💖
-        </p>
-        <p id="dateCounter" style="font-size: 16px; color: #ffe6f0; margin-top: 10px;"></p>
+        <p id="loveNote">I love you my love 💖</p>
+        <p id="dateCounter"></p>
         <button class="next-btn" onclick="endMessage()">Finish 💖</button>
     </div>
 
 </div>
 
 <script>
-/* --- HEARTS --- */
-function createHeart() {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.innerText = '💖';
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7000);
-}
-
-/* --- SLIDE1 FLOATING HEARTS --- */
-function createFloatingHeartsSlide1() {
-    const container = document.querySelector('#page1 .floating-hearts');
-    for (let i = 0; i < 6; i++) {
-        const heart = document.createElement('div');
-        heart.innerText = '💖';
-        heart.style.left = Math.random() * 100 + 'px';
-        heart.style.fontSize = (12 + Math.random()*12) + 'px';
-        container.appendChild(heart);
-    }
-}
-window.addEventListener('load', () => {
-    if (!document.getElementById('page1').classList.contains('hidden')) {
-        createFloatingHeartsSlide1();
-    }
-});
-
-/* --- TYPING --- */
-function typeText(element, text, speed = 35, callback = null) {
-    element.innerHTML = "";
-    let i = 0;
-    const interval = setInterval(() => {
-        element.innerHTML += text.charAt(i);
-        i++;
-        if (i >= text.length) {
-            clearInterval(interval);
-            if (callback) callback();
-        }
-    }, speed);
-}
-
-/* --- NOTES --- */
+// --- Notes ---
 const note1Text = `I don't like the fact we are so distant now, after over a year of talking
 to each other all the time. Even when we would have fights, we were never this distant.
 I would at least see you at work and be around you, but now that is not possible either.
@@ -301,73 +212,96 @@ This moment… it’s ours 💖`;
 
 const note3Text = `If you pressed Yes after pressing No multiple times that is fine by me.... I know this might be childish what I did here but there was nothing I could really do for you with how you have been. I want to do these for you, these cute little things and also a lot of other things for you. Why would I not want to?! I want my baby, my love back. I really really really miss her a lot. I want us to be back to how we were — that does not mean you have to speak to me the whole day. I just want us to be back to normal. Tanjina Malik, you are the Love Of My Lifeeeee, my baby, my other half. You are the girl I have fallen in love with so deeply, if I don't do these things for you then who do I even do them for? Not one day or moment passes by I don't think about you. I want a life with you, a future with you, a family with you. I want to spend my whole life with you and do everything with you. I love you a lotttttt babe, I love you, I love you, I loveeeee youuuuuuuuuu and I just loveeeeeeeeeeeeeeeeeeeeeee youuuuuuuuuuuuu. I wish to say this to you, only you the girl I love so deeply, every single day without any sort of hesitation because I want it to be you. You are beautiful, sexy and a very good person all round. Even when you put on a mean face you look extremely hot to me I dont know why. You are the abosolute perfect woman for me and I would not want to have it any other way. I LOVE YOU MY LOVE.`;
 
-typeText(document.getElementById('note1'), note1Text);
-
-/* --- BUTTON LOGIC --- */
-let yesSize = 20;
-function goToQuestion() { 
-    document.getElementById('page1').classList.add('hidden'); 
-    document.getElementById('page2').classList.remove('hidden'); 
+// --- Typing ---
+function typeText(element, text, speed=35, callback=null){
+    element.innerHTML="";
+    let i=0;
+    const interval = setInterval(()=>{
+        element.innerHTML += text.charAt(i);
+        i++;
+        if(i>=text.length){ clearInterval(interval); if(callback) callback(); }
+    }, speed);
 }
-function sayNo() { 
-    const yesBtn = document.getElementById('yesBtn'); 
-    yesSize += 6; 
-    yesBtn.style.fontSize = yesSize + 'px'; 
-    yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px'; 
 
-    // shake container
+// --- Page Navigation & Effects ---
+let yesSize=20;
+function goToQuestion(){document.getElementById('page1').classList.add('hidden');document.getElementById('page2').classList.remove('hidden');}
+function sayNo(){
+    const yesBtn = document.getElementById('yesBtn');
+    yesSize+=6; yesBtn.style.fontSize = yesSize+'px'; yesBtn.style.padding=(14+yesSize/4)+'px '+(28+yesSize/3)+'px';
     const container = document.getElementById('container');
     container.classList.add('vibrate');
-    setTimeout(() => container.classList.remove('vibrate'), 500);
+    setTimeout(()=>container.classList.remove('vibrate'),600);
+}
+function sayYes(){
+    const container = document.getElementById('container');
+    container.classList.add('pulse-screen');
+    setTimeout(()=>container.classList.remove('pulse-screen'),600);
 
-    // confetti
-    confetti({ particleCount: 15, spread: 70, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
+    document.getElementById('page2').classList.add('hidden');
+    document.getElementById('page3').classList.remove('hidden');
+
+    confetti({particleCount:220,spread:120,origin:{y:0.6},shapes:['heart'],colors:['#ff4d8d','#ff6fae','#ff1f6a']});
+    typeText(document.getElementById('note2'),note2Text);
 }
-function sayYes() { 
-    document.getElementById('page2').classList.add('hidden'); 
-    document.getElementById('page3').classList.remove('hidden'); 
-    confetti({ particleCount: 30, spread: 90, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
+function goToThirdNote(){
+    document.getElementById('page3').classList.add('hidden');
+    document.getElementById('page4').classList.remove('hidden');
+    typeText(document.getElementById('note3'),note3Text,25);
 }
-function goToThirdNote() { 
-    document.getElementById('page3').classList.add('hidden'); 
-    document.getElementById('page4').classList.remove('hidden'); 
-}
-function goToPhotoPage() { 
-    document.getElementById('page4').classList.add('hidden'); 
-    document.getElementById('page5').classList.remove('hidden'); 
-    confetti({ particleCount: 25, spread: 70, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
-}
-function endMessage() { 
-    const final = document.getElementById('finalLove'); 
-    if(final) final.style.opacity = 1;
-    alert("All done! 💖"); 
+function goToPhotoPage(){
+    document.getElementById('page4').classList.add('hidden');
+    document.getElementById('page5').classList.remove('hidden');
+    startDateCounter();
+    confetti({particleCount:300,spread:160,origin:{y:0.4},shapes:['heart'],colors:['#ff4d8d','#ff6fae','#ff1f6a','#ffe6f0']});
 }
 
-/* --- DATE COUNTER --- */
-function updateDateCounter() {
-    const startDate = new Date('2023-02-14');
-    const now = new Date();
-    const diff = now - startDate;
-    const days = Math.floor(diff / (1000*60*60*24));
-    const dateCounter = document.getElementById('dateCounter');
-    if(dateCounter) dateCounter.innerHTML = `Days together: <span class="flicker">${days}</span>`;
-}
-setInterval(updateDateCounter, 1000);
-updateDateCounter();
+// --- Heart Rain ---
+function createHeart(){const heart=document.createElement('div');heart.classList.add('heart');heart.innerText='💖';heart.style.left=Math.random()*100+'vw';heart.style.animationDuration=(4+Math.random()*3)+'s';document.body.appendChild(heart);setTimeout(()=>heart.remove(),7000);}
 
-/* --- BG MUSIC --- */
-const bgMusic = document.getElementById('bgMusic');
-document.getElementById('tapScreen').addEventListener('click', () => {
+// --- Save Moment ---
+function saveMoment(){
+    const text=`Valentine’s Night 💖\nTanjina said YES.\nA heartbeat frozen in time.`;
+    const blob=new Blob([text],{type:"text/plain"});
+    const link=document.createElement("a");
+    link.href=URL.createObjectURL(blob);
+    link.download="Our_Valentine_Night.txt";
+    link.click();
+}
+
+// --- Tap to Start ---
+document.getElementById('tapScreen').addEventListener('click',()=>{
     const tapScreen = document.getElementById('tapScreen');
     const container = document.getElementById('container');
-    tapScreen.style.display = 'none';       // Hide the tap screen
-    container.classList.remove('hidden');   // Show the main container
-    document.getElementById('bgMusic').play(); // Start the music
+    tapScreen.style.display='none';
+    container.classList.remove('hidden');
+    document.getElementById('bgMusic').play().catch(()=>console.log("Audio blocked"));
 });
 
-});
+// --- End Message ---
+function endMessage(){alert("💖 All done! Hope this made you smile! 💖");}
+
+// --- Type first note ---
+typeText(document.getElementById('note1'),note1Text);
+
+// --- Date Counter ---
+function startDateCounter(){
+    const targetDate = new Date("2026-01-13T22:00:00");
+    const counter = document.getElementById('dateCounter');
+    function updateCounter(){
+        const now = new Date();
+        let diff = now - targetDate;
+        const days=Math.floor(diff/(1000*60*60*24)); diff-=days*24*60*60*1000;
+        const hours=Math.floor(diff/(1000*60*60)); diff-=hours*60*60*1000;
+        const minutes=Math.floor(diff/(1000*60)); diff-=minutes*60*1000;
+        const seconds=Math.floor(diff/1000);
+        counter.innerHTML=`${days} days, ${hours} hours, ${minutes} minutes, <span class="flicker">${seconds}</span> seconds since I last saw you 💖`;
+    }
+    updateCounter();
+    setInterval(updateCounter,1000);
+}
 
 </script>
-
 </body>
 </html>
+

@@ -384,40 +384,45 @@ function sayNo() {
 
 function sayYes() {
     const page2 = document.getElementById('page2');
-    const page3 = document.getElementById('page3');
-    const container = document.getElementById('container');
-    const overlay = document.getElementById('dimOverlay');
+    const questionHeading = page2.querySelector("h1");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = page2.querySelector(".no-btn");
 
-    page2.innerHTML = "<h1 style='font-size:50px;'>1...</h1>";
+    // Disable buttons while counting
+    yesBtn.disabled = true;
+    noBtn.disabled = true;
 
-    setTimeout(() => {
-        page2.innerHTML = "<h1 style='font-size:50px;'>2...</h1>";
+    let count = 1;
+    questionHeading.textContent = count + "...";
+
+    const interval = setInterval(() => {
+        count++;
+        questionHeading.textContent = count + "...";
+        if (count === 3) {
+            clearInterval(interval);
+
+            setTimeout(() => {
+                page2.classList.add("hidden");
+                document.getElementById("page3").classList.remove("hidden");
+
+                // restore dim overlay fade-out
+                document.getElementById("dimOverlay").classList.remove("active");
+
+                confetti({
+                    particleCount: 250,
+                    spread: 140,
+                    origin: { y: 0.6 },
+                    shapes: ['heart'],
+                    colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']
+                });
+
+                typeText(document.getElementById('note2'), note2Text);
+            }, 300);
+
+        }
     }, 800);
-
-    setTimeout(() => {
-        page2.innerHTML = "<h1 style='font-size:50px;'>3...</h1>";
-    }, 1600);
-
-    setTimeout(() => {
-        overlay.classList.remove('active');
-        page2.classList.add('hidden');
-        page3.classList.remove('hidden');
-
-        container.classList.add('pulse-screen');
-        setTimeout(() => container.classList.remove('pulse-screen'), 600);
-
-        confetti({
-            particleCount: 250,
-            spread: 140,
-            origin: { y: 0.6 },
-            shapes: ['heart'],
-            colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']
-        });
-
-        typeText(document.getElementById('note2'), note2Text);
-
-    }, 2400);
 }
+
 
 function goToThirdNote() {
     document.getElementById('page3').classList.add('hidden');

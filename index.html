@@ -204,12 +204,55 @@ button {
     50% { opacity: 1; transform: scale(1.2); }
     100% { opacity: 0; transform: scale(0.5); }
 }
+    /* ===== PAGE 2 CINEMATIC EFFECT ===== */
+.dim-background {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.dim-background.active {
+    opacity: 1;
+}
+
+#page2 {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.6s ease;
+}
+
+#page2.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Shake animation */
+@keyframes screenShake {
+    0% { transform: translate(0); }
+    20% { transform: translate(-6px, 6px); }
+    40% { transform: translate(6px, -6px); }
+    60% { transform: translate(-6px, -6px); }
+    80% { transform: translate(6px, 6px); }
+    100% { transform: translate(0); }
+}
+
+.shake {
+    animation: screenShake 0.4s;
+}
 
 
 
 </style>
 </head>
 <body>
+
+<div id="dimOverlay" class="dim-background"></div>
 
 <audio id="bgMusic" loop>
     <source src="assets/CinnamonGirl.mp3" type="audio/mpeg">
@@ -327,16 +370,55 @@ typeText(document.getElementById('note1'), note1Text);
 /* --- BUTTON LOGIC --- */
 let yesSize = 20;
 function goToQuestion() { document.getElementById('page1').classList.add('hidden'); document.getElementById('page2').classList.remove('hidden'); }
-function sayNo() { const yesBtn = document.getElementById('yesBtn'); yesSize += 6; yesBtn.style.fontSize = yesSize + 'px'; yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px'; }
-function sayYes() {
-    document.getElementById('page2').classList.add('hidden');
-    document.getElementById('page3').classList.remove('hidden');
+function sayNo() {
+    const yesBtn = document.getElementById('yesBtn');
     const container = document.getElementById('container');
-    container.classList.add('pulse-screen');
-    setTimeout(() => container.classList.remove('pulse-screen'), 600);
-    confetti({particleCount: 220, spread: 120, origin: { y: 0.6 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']});
-    typeText(document.getElementById('note2'), note2Text);
+
+    yesSize += 6;
+    yesBtn.style.fontSize = yesSize + 'px';
+    yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px';
+
+    container.classList.add('shake');
+    setTimeout(() => container.classList.remove('shake'), 400);
 }
+
+function sayYes() {
+    const page2 = document.getElementById('page2');
+    const page3 = document.getElementById('page3');
+    const container = document.getElementById('container');
+    const overlay = document.getElementById('dimOverlay');
+
+    page2.innerHTML = "<h1 style='font-size:50px;'>1...</h1>";
+
+    setTimeout(() => {
+        page2.innerHTML = "<h1 style='font-size:50px;'>2...</h1>";
+    }, 800);
+
+    setTimeout(() => {
+        page2.innerHTML = "<h1 style='font-size:50px;'>3...</h1>";
+    }, 1600);
+
+    setTimeout(() => {
+        overlay.classList.remove('active');
+        page2.classList.add('hidden');
+        page3.classList.remove('hidden');
+
+        container.classList.add('pulse-screen');
+        setTimeout(() => container.classList.remove('pulse-screen'), 600);
+
+        confetti({
+            particleCount: 250,
+            spread: 140,
+            origin: { y: 0.6 },
+            shapes: ['heart'],
+            colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']
+        });
+
+        typeText(document.getElementById('note2'), note2Text);
+
+    }, 2400);
+}
+
 function goToThirdNote() {
     document.getElementById('page3').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');

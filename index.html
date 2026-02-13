@@ -123,6 +123,60 @@ button {
 .flicker { animation: secondFlicker 1s infinite; }
 @keyframes secondFlicker {0%,100%{opacity:1;}50%{opacity:0.4;}}
 
+/* Floating hearts for slide 1 */
+.floating-hearts div {
+    position: absolute;
+    top: 100%;
+    font-size: 18px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.6;
+    color: #ff4d8d;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { transform: translateY(-50vh) rotate(15deg); opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(30deg); opacity: 0; }
+}
+
+/* Glowing typing effect for notes */
+#note1.typing {
+    text-shadow: 0 0 8px #ff6fae, 0 0 20px #ff1f6a;
+}
+
+/* Slide container entrance */
+.container {
+    animation: slideInBounce 1.2s ease forwards;
+}
+
+@keyframes slideInBounce {
+    0% { transform: translateY(50px); opacity: 0; }
+    60% { transform: translateY(-10px); opacity: 1; }
+    80% { transform: translateY(5px); }
+    100% { transform: translateY(0); }
+}
+
+    /* Background gradient glow */
+#page2 {
+    background: radial-gradient(circle at center, rgba(255,77,141,0.1) 0%, rgba(26,0,31,0.9) 100%);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+/* Button hover effect */
+#page2 button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #ff4d8d;
+}
+
+/* Floating hearts on hover */
+#page2 button:hover::after {
+    content: '💖';
+    position: absolute;
+    animation: floatUp 2s linear;
+}
+
+
 </style>
 </head>
 <body>
@@ -299,6 +353,29 @@ function startDateCounter(){
     updateCounter();
     setInterval(updateCounter,1000);
 }
+
+function createFloatingHeartsSlide1() {
+    const container = document.querySelector('.floating-hearts');
+    for (let i = 0; i < 6; i++) {
+        const heart = document.createElement('div');
+        heart.innerText = '💖';
+        heart.style.left = Math.random() * 100 + 'px';
+        heart.style.fontSize = (12 + Math.random()*12) + 'px';
+        container.appendChild(heart);
+    }
+}
+document.getElementById('page1').addEventListener('transitionend', createFloatingHeartsSlide1);
+
+const yesBtn = document.getElementById('yesBtn');
+yesBtn.addEventListener('mouseover', () => {
+    confetti({ particleCount: 10, spread: 40, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
+});
+const noBtn = document.querySelector('.no-btn');
+noBtn.addEventListener('mouseover', () => {
+    confetti({ particleCount: 10, spread: 40, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
+});
+
+
 
 </script>
 </body>

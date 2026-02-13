@@ -185,7 +185,7 @@ button {
 
 <div id="tapScreen">Tap anywhere to start 💖</div>
 
-<div class="container" id="container">
+<div class="container hidden" id="container">
 
     <!-- PAGE 1 -->
     <div id="page1">
@@ -358,9 +358,13 @@ updateDateCounter();
 /* --- BG MUSIC --- */
 const bgMusic = document.getElementById('bgMusic');
 document.getElementById('tapScreen').addEventListener('click', () => {
-    document.getElementById('tapScreen').style.display = 'none';
-    document.getElementById('container').style.display = 'block';
-    bgMusic.play();
+    const tapScreen = document.getElementById('tapScreen');
+    const container = document.getElementById('container');
+    tapScreen.style.display = 'none';       // Hide the tap screen
+    container.classList.remove('hidden');   // Show the main container
+    document.getElementById('bgMusic').play(); // Start the music
+});
+
 });
 
 </script>

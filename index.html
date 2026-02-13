@@ -361,7 +361,16 @@ tapScreen.addEventListener('click',()=>{
     // Optional alert
     alert("💖 All done! Hope this made you smile! 💖");
 }
-
+function saveMoment() {
+    const text = `Valentine’s Night 💖\nTanjina said YES.\nA heartbeat frozen in time.`;
+    const blob = new Blob([text], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Our_Valentine_Night.txt";
+    document.body.appendChild(link);  // temporarily add to DOM
+    link.click();
+    document.body.removeChild(link);  // remove after click
+}
 
 </script>
 </body>

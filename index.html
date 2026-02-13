@@ -159,7 +159,7 @@ button {
     <div id="page3" class="hidden">
         <h1>YAYYY 🎉💖</h1>
         <p id="note2"></p>
-        <button class="save-btn" onclick="saveMoment()">Save This Moment 💾</button>
+        <a id="saveLink" class="save-btn" href="#" download="Our_Valentine_Night.txt">Save This Moment 💾</a>
         <button class="next-btn" onclick="goToThirdNote()">Next 💌</button>
     </div>
 
@@ -364,13 +364,17 @@ tapScreen.addEventListener('click',()=>{
 function saveMoment() {
     const text = `Valentine’s Night 💖\nTanjina said YES.\nA heartbeat frozen in time.`;
     const blob = new Blob([text], { type: "text/plain" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "Our_Valentine_Night.txt";
-    document.body.appendChild(link);  // temporarily add to DOM
+    const url = URL.createObjectURL(blob);
+    const link = document.getElementById('saveLink');
+    link.href = url;
+    
+    // Trigger download
     link.click();
-    document.body.removeChild(link);  // remove after click
+
+    // Optional: revoke object URL after a short delay to free memory
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+
 
 </script>
 </body>

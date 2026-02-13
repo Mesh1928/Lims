@@ -193,6 +193,8 @@ button {
 </style>
 </head>
 <body>
+<div id="page3Roses"></div>
+
 
 <audio id="bgMusic" loop>
     <source src="assets/CinnamonGirl.mp3" type="audio/mpeg">
@@ -223,7 +225,6 @@ button {
         <p id="note2"></p>
         <button class="save-btn" onclick="saveMoment()">Save This Moment 💾</button>
         <button class="next-btn" onclick="goToThirdNote()">Next 💌</button>
-        <div id="page3Roses"></div>
 
     </div>
 
@@ -348,6 +349,8 @@ function sayYes(){
 function goToThirdNote(){
     document.getElementById('page3').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
+    startPage3Roses();
+
     typeText(document.getElementById('note3'),note3Text,25,()=>{
         confetti({particleCount:150,spread:120,origin:{y:0.7},shapes:['heart'],colors:['#ff4d8d','#ff6fae','#ff1f6a','#ffe6f0']});
         const heartInterval=setInterval(()=>createHeart(),250);
@@ -355,6 +358,8 @@ function goToThirdNote(){
     });
 }
 function goToPhotoPage(){
+    stopPage3Roses();
+
     document.getElementById('page4').classList.add('hidden');
     document.getElementById('page5').classList.remove('hidden');
     confetti({particleCount:300,spread:160,origin:{y:0.4},shapes:['heart'],colors:['#ff4d8d','#ff6fae','#ff1f6a','#ffe6f0']});

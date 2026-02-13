@@ -175,6 +175,40 @@ button {
     position: absolute;
     animation: floatUp 2s linear;
 }
+    /* Floating hearts animation for slide1 */
+.floating-hearts div {
+    position: absolute;
+    top: 100%;
+    font-size: 18px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.6;
+    color: #ff4d8d;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { transform: translateY(-50vh) rotate(15deg); opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(30deg); opacity: 0; }
+}
+
+/* Glowing typing effect for slide1 */
+#note1.typing {
+    text-shadow: 0 0 8px #ff6fae, 0 0 20px #ff1f6a;
+}
+
+/* Slide2 background glow */
+#page2 {
+    background: radial-gradient(circle at center, rgba(255,77,141,0.1) 0%, rgba(26,0,31,0.9) 100%);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+/* Buttons hover glow */
+#page2 button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #ff4d8d;
+}
+
 
 
 </style>
@@ -194,6 +228,7 @@ button {
         <h1>Hey <span class="name">Tanjina</span> 💖</h1>
         <p id="note1"></p>
         <button class="next-btn" onclick="goToQuestion()">Next 💌</button>
+        <div class="floating-hearts"></div>
     </div>
 
     <!-- PAGE 2 -->
@@ -280,6 +315,32 @@ This moment… it’s ours 💖`;
 const note3Text = `If you pressed Yes after pressing No multiple times that is fine by me.... I know this might be childish what I did here but there was nothing I could really do for you with how you have been. I want to do these for you, these cute little things and also a lot of other things for you. Why would I not want to?! I want my baby, my love back. I really really really miss her a lot. I want us to be back to how we were — that does not mean you have to speak to me the whole day. I just want us to be back to normal. Tanjina Malik, you are the Love Of My Lifeeeee, my baby, my other half. You are the girl I have fallen in love with so deeply, if I don't do these things for you then who do I even do them for? Not one day or moment passes by I don't think about you. I want a life with you, a future with you, a family with you. I want to spend my whole life with you and do everything with you. I love you a lotttttt babe, I love you, I love you, I loveeeee youuuuuuuuuu and I just loveeeeeeeeeeeeeeeeeeeeeee youuuuuuuuuuuuu. I wish to say this to you, only you the girl I love so deeply, every single day without any sort of hesitation because I want it to be you. You are beautiful, sexy and a very good person all round. Even when you put on a mean face you look extremely hot to me I dont know why. You are the abosolute perfect woman for me and I would not want to have it any other way. I LOVE YOU MY LOVE.`;
 
 typeText(document.getElementById('note1'), note1Text);
+
+// Slide1 floating hearts
+function createFloatingHeartsSlide1() {
+    const container = document.querySelector('#page1 .floating-hearts');
+    for (let i = 0; i < 6; i++) {
+        const heart = document.createElement('div');
+        heart.innerText = '💖';
+        heart.style.left = Math.random() * 100 + 'px';
+        heart.style.fontSize = (12 + Math.random()*12) + 'px';
+        container.appendChild(heart);
+    }
+}
+window.addEventListener('load', () => {
+    if (!document.getElementById('page1').classList.contains('hidden')) {
+        createFloatingHeartsSlide1();
+    }
+});
+const yesBtn = document.getElementById('yesBtn');
+yesBtn.addEventListener('mouseover', () => {
+    confetti({ particleCount: 10, spread: 40, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
+});
+const noBtn = document.querySelector('.no-btn');
+noBtn.addEventListener('mouseover', () => {
+    confetti({ particleCount: 10, spread: 40, origin: { y: 0.6 }, shapes:['heart'], colors:['#ff4d8d','#ff6fae'] });
+});
+
 
 /* --- BUTTON LOGIC --- */
 let yesSize=20;

@@ -88,23 +88,11 @@ button {
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
-
-/* --- PAGE 5 GLOW --- */
 #lovePhoto {
-    animation: floatPulse 3s ease-in-out infinite, glowPhoto 2s infinite alternate;
-    box-shadow: 0 0 20px #ff4d8d, 0 0 35px #ff1f6a;
+    animation: floatPulse 3s ease-in-out infinite;
 }
 #loveNote {
-    animation: floatPulse 3s ease-in-out infinite, glowNote 2s infinite alternate;
-    text-shadow: 0 0 15px #ff4d8d, 0 0 40px #ff1f6a;
-}
-@keyframes glowPhoto {
-    from { box-shadow: 0 0 20px #ff4d8d, 0 0 35px #ff1f6a; }
-    to { box-shadow: 0 0 40px #ff6fae, 0 0 70px #ff1f6a; }
-}
-@keyframes glowNote {
-    from { text-shadow: 0 0 15px #ff4d8d, 0 0 40px #ff1f6a; }
-    to { text-shadow: 0 0 25px #ff6fae, 0 0 60px #ff1f6a; }
+    animation: floatPulse 3s ease-in-out infinite;
 }
 
 /* --- EXISTING ANIMATIONS --- */
@@ -130,7 +118,7 @@ button {
     100% { transform: translateY(0); }
 }
 
-/* --- DATE COUNTER --- */
+/* --- DATE COUNTER GLOW --- */
 #dateCounter {
     font-size: 18px;
     font-weight: bold;
@@ -163,32 +151,6 @@ button {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
 }
-/* Floating hearts for Page 2 */
-.floating-hearts-2 .heart {
-    position: absolute;
-    top: -30px;
-    font-size: 16px;
-    animation: fall2 linear infinite;
-    opacity: 0.7;
-}
-@keyframes fall2 {
-    to {
-        transform: translateY(110vh);
-        opacity: 0;
-    }
-}
-
-/* Button glow animation */
-#yesBtn, #noBtn {
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px #ff4d8d;
-}
-#yesBtn:hover, #noBtn:hover {
-    box-shadow: 0 0 25px #ff6fae, 0 0 35px #ff1f6a;
-    transform: scale(1.05);
-}
-
-
 </style>
 </head>
 <body>
@@ -210,11 +172,9 @@ button {
 
     <!-- PAGE 2 -->
     <div id="page2" class="hidden">
-        <h1>Will you be my Valentine? 💘</h1>
+        <h1 style="animation: glow 2s infinite alternate;">Will you be my Valentine? 💘</h1>
         <button id="yesBtn" class="yes-btn" onclick="sayYes()">Yes 💖</button>
         <button class="no-btn" onclick="sayNo()">No 🙈</button>
-        <div class="floating-hearts-2"></div>
-
     </div>
 
     <!-- PAGE 3 -->
@@ -234,10 +194,18 @@ button {
 
     <!-- PAGE 5 -->
     <div id="page5" class="hidden">
-        <img id="lovePhoto" src="assets/photo.jpeg" alt="Love Photo" style="width: 100%; border-radius: 20px; margin-bottom: 15px;">
+        <img id="lovePhoto" src="assets/photo.jpeg" alt="Love Photo" 
+             style="width: 100%; border-radius: 20px; box-shadow: 0 0 40px #ff4d8d,0 0 60px #ff1f6a; margin-bottom: 15px; animation: floatPulse 3s ease-in-out infinite;">
+        
         <div class="kisses">💋💋💋💋💋</div>
-        <p id="loveNote" style="font-size: 20px; font-weight: bold;">I love you my love 💖</p>
+
+        <p id="loveNote" style="font-size: 20px; font-weight: bold; color: #ff4d8d; text-shadow:0 0 15px #ff4d8d,0 0 35px #ff1f6a;">
+            I love you my love 💖
+        </p>
+
+        <!-- DATE COUNTER -->
         <p id="dateCounter"></p>
+
         <button class="next-btn" onclick="endMessage()">Finish 💖</button>
     </div>
 
@@ -305,43 +273,53 @@ function sayNo() {
     const yesBtn = document.getElementById('yesBtn'); 
     yesSize += 6; 
     yesBtn.style.fontSize = yesSize + 'px'; 
-    yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px'; 
-    // shake screen
-    const container = document.getElementById('container');
-    container.classList.add('vibrate');
-    setTimeout(() => container.classList.remove('vibrate'), 300);
+    yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px';
 }
 function sayYes() {
     document.getElementById('page2').classList.add('hidden');
     document.getElementById('page3').classList.remove('hidden');
+
+    confetti({
+        particleCount: 220,
+        spread: 120,
+        origin: { y: 0.6 },
+        shapes: ['heart'],
+        colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']
+    });
+
     const container = document.getElementById('container');
     container.classList.add('pulse-screen');
     setTimeout(() => container.classList.remove('pulse-screen'), 600);
-    confetti({particleCount: 220, spread: 120, origin: { y: 0.6 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']});
+
     typeText(document.getElementById('note2'), note2Text);
 }
 function goToThirdNote() {
     document.getElementById('page3').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
+
     typeText(document.getElementById('note3'), note3Text, 25, () => {
-        confetti({particleCount: 150, spread: 120, origin: { y: 0.7 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a', '#ffe6f0']});
-        const heartInterval = setInterval(() => createHeart(), 250);
-        setTimeout(() => clearInterval(heartInterval), 4000);
+        confetti({
+            particleCount: 150,
+            spread: 120,
+            origin: { y: 0.7 },
+            shapes: ['heart'],
+            colors: ['#ff4d8d', '#ff6fae', '#ff1f6a', '#ffe6f0']
+        });
     });
 }
 function goToPhotoPage() {
     document.getElementById('page4').classList.add('hidden');
     document.getElementById('page5').classList.remove('hidden');
-    confetti({particleCount: 300, spread: 160, origin: { y: 0.4 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a', '#ffe6f0']});
-    const heartInterval = setInterval(() => createHeart(), 150);
-    setTimeout(() => clearInterval(heartInterval), 5000);
-    startDateCounter();
-    // shake on click
-    document.getElementById('yesBtn')?.addEventListener('click', () => {
-        const container = document.getElementById('container');
-        container.classList.add('vibrate');
-        setTimeout(() => container.classList.remove('vibrate'), 300);
+
+    confetti({
+        particleCount: 300,
+        spread: 160,
+        origin: { y: 0.4 },
+        shapes: ['heart'],
+        colors: ['#ff4d8d', '#ff6fae', '#ff1f6a', '#ffe6f0']
     });
+
+    startDateCounter();
 }
 function saveMoment() {
     const text = `Valentine’s Night 💖\nTanjina said YES.\nA heartbeat frozen in time.`;
@@ -357,6 +335,7 @@ document.getElementById('tapScreen').addEventListener('click', () => {
 });
 function endMessage() { alert("💖 All done! Hope this made you smile! 💖"); }
 
+/* --- DATE COUNTER --- */
 function startDateCounter() {
     const targetDate = new Date("2026-01-13T22:00:00");
     const counter = document.getElementById('dateCounter');
@@ -384,71 +363,8 @@ function startDateCounter() {
     updateCounter();
     setInterval(updateCounter, 1000);
 }
-
-/* --- Floating hearts and confetti on Page 2 --- */
-function createHeart2() {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.innerText = '💖';
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.fontSize = (14 + Math.random() * 8) + 'px';
-    document.querySelector('.floating-hearts-2').appendChild(heart);
-    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
-    setTimeout(() => heart.remove(), 5000);
-}
-
-// Spawn floating hearts every 400ms on Page 2
-let heartInterval2;
-document.getElementById('page2').addEventListener('transitionend', () => {
-    heartInterval2 = setInterval(() => createHeart2(), 400);
-});
-
-// Stop when leaving Page 2
-function stopHearts2() { clearInterval(heartInterval2); }
-
-// Confetti burst every 3 seconds while Page 2 is active
-let confettiInterval2;
-document.getElementById('page2').addEventListener('transitionend', () => {
-    confettiInterval2 = setInterval(() => {
-        confetti({
-            particleCount: 50,
-            spread: 70,
-            origin: { y: 0.5 },
-            shapes: ['heart'],
-            colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']
-        });
-    }, 3000);
-});
-
-function stopConfetti2() { clearInterval(confettiInterval2); }
-
-// Stop hearts and confetti when leaving Page 2
-function goToQuestion() {
-    document.getElementById('page1').classList.add('hidden');
-    document.getElementById('page2').classList.remove('hidden');
-}
-function sayYes() {
-    stopHearts2(); stopConfetti2();
-    document.getElementById('page2').classList.add('hidden');
-    document.getElementById('page3').classList.remove('hidden');
-    const container = document.getElementById('container');
-    container.classList.add('pulse-screen');
-    setTimeout(() => container.classList.remove('pulse-screen'), 600);
-    confetti({particleCount: 220, spread: 120, origin: { y: 0.6 }, shapes: ['heart'], colors: ['#ff4d8d', '#ff6fae', '#ff1f6a']});
-    typeText(document.getElementById('note2'), note2Text);
-}
-function sayNo() {
-    const yesBtn = document.getElementById('yesBtn');
-    yesSize += 6;
-    yesBtn.style.fontSize = yesSize + 'px';
-    yesBtn.style.padding = (14 + yesSize/4) + 'px ' + (28 + yesSize/3) + 'px';
-    // Shake screen
-    const container = document.getElementById('container');
-    container.classList.add('vibrate');
-    setTimeout(() => container.classList.remove('vibrate'), 300);
-}
-
 </script>
 </body>
 </html>
+
 
